@@ -1,0 +1,16 @@
+@echo off
+
+if "X%VisualStudioVersion%"=="X" (
+	call "%@X_CMAKE_VS_VERSION@%VsDevCmd.bat"
+)
+
+msbuild /m @CMAKE_PROJECT_NAME@.sln /t:@XG_CMAKE_FOLDER@ZERO_CHECK
+
+if %errorlevel%==0 (
+	if "%1" == "" (
+		msbuild /m @CMAKE_PROJECT_NAME@.sln 
+	) else (
+		msbuild /m @CMAKE_PROJECT_NAME@.sln /t:%1 
+	)
+)
+

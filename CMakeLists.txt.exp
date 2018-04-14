@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.4)
+
+include("x/check.cmake")
+
+project(DumpAnalysis)
+
+include("x/x.cmake")
+
+x_sub_dir(3rd)
+x_sub_dir(Analysis)
+
+x_finish_project()
