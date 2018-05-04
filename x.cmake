@@ -167,7 +167,11 @@ macro(x_target_end)
 	endif()
 
 	foreach(_lp ${X_CUR_SYSLIB})
-		_append_target_property(${X_TARGET_NAME} LINK_FLAGS ${_lp})
+		if (APPLE)
+			_append_target_property(${X_TARGET_NAME} LINK_FLAGS "-framework ${_lp} -w")
+		else()
+			_append_target_property(${X_TARGET_NAME} LINK_FLAGS ${_lp})
+		endif()
 	endforeach()
 
 	set_property(TARGET ${X_TARGET_NAME} PROPERTY XT_TARGET_TYPE ${X_TARGET_TYPE})
@@ -369,6 +373,7 @@ endmacro(x_link_inc_targets)
 
 # 连接一个或者多个系统库
 # x_link_syslib(<lib1> [| <lib2> [| ... ]])
+# x_link_syslib(CoreFoundation [| <OtherFoundation>]) (APPLE)
 macro(x_link_syslib)
 	set(X_CUR_SYSLIB ${ARGN})
 endmacro(x_link_syslib)
